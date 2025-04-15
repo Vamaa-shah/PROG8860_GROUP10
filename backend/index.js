@@ -9,7 +9,7 @@ app.use(express.json());
 const dynamo = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
 
 app.post('/submit-feedback', async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, feedback } = req.body;
 
   try {
     await dynamo.put({
@@ -18,7 +18,7 @@ app.post('/submit-feedback', async (req, res) => {
         id: Date.now().toString(),
         name,
         email,
-        message
+        feedback
       }
     }).promise();
     res.status(200).send("Feedback submitted.");

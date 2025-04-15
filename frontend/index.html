@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback Collector</title>
+</head>
+<body>
+  <h2>Feedback Form</h2>
+  <form id="feedbackForm">
+    <input type="text" name="name" placeholder="Your Name" required /><br />
+    <input type="email" name="email" placeholder="Your Email" required /><br />
+    <textarea name="feedback" placeholder="Your Feedback" required></textarea><br />
+    <button type="submit">Submit Feedback</button>
+  </form>
+  <p id="responseMessage"></p>
+
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const responseMessage = document.getElementById('responseMessage');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: form.name.value,
+        email: form.email.value,
+        feedback: form.feedback.value
+      };
+
+      try {
+        const response = await fetch('http://13.218.54.153:3001/submit-feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          responseMessage.innerHTML = `<span style="color: green;">✅ ${result.message}</span>`;
+          form.reset();
+        } else {
+          responseMessage.innerHTML = `<span style="color: red;">❌ ${result.error}</span>`;
+        }
+      } catch (err) {
+        responseMessage.innerHTML = `<span style="color: red;">❌ Failed to submit feedback.</span>`;
+      }
+    });
+  </script>
+</body>
+</html>
