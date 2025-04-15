@@ -18,7 +18,9 @@ export class CdkStack extends cdk.Stack {
     new s3.Bucket(this, 'FrontendBucket', {
       websiteIndexDocument: 'index.html',
       publicReadAccess: true,
-      removalPolicy: cdk.RemovalPolicy.DESTROY // For testing
+      blockPublicAccess: s3.BlockPublicAccess.NONE,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
     });
+    
   }
 }
