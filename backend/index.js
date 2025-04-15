@@ -21,7 +21,7 @@ app.post('/submit-feedback', async (req, res) => {
         message: feedback
       }
     }).promise();
-    res.status(200).send("Feedback submitted.");
+    res.status(200).json({ message: "Feedback submitted." });
   } catch (err) {
     res.status(500).send("Error saving feedback.");
   }
