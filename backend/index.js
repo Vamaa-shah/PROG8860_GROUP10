@@ -18,7 +18,7 @@ app.post('/submit-feedback', async (req, res) => {
         id: Date.now().toString(),
         name,
         email,
-        feedback
+        message: feedback
       }
     }).promise();
     res.status(200).send("Feedback submitted.");
